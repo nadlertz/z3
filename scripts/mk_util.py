@@ -555,19 +555,19 @@ def set_version(major, minor, build, revision):
             print("Set Assembly Version (BUILD):", VER_MAJOR, VER_MINOR, VER_BUILD, VER_TWEAK)
             return
 
-    # use parameters to set up version if not provided by script args            
+    # use parameters to set up version if not provided by script args
     VER_MAJOR = major
     VER_MINOR = minor
     VER_BUILD = build
     VER_TWEAK = revision
 
-    # update VER_TWEAK base on github     
+    # update VER_TWEAK base on github
     if GIT_DESCRIBE:
         branch = check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
         VER_TWEAK = int(check_output(['git', 'rev-list', '--count', 'HEAD']))
-    
+
     print("Set Assembly Version (DEFAULT):", VER_MAJOR, VER_MINOR, VER_BUILD, VER_TWEAK)
-    
+
 def get_version():
     return (VER_MAJOR, VER_MINOR, VER_BUILD, VER_TWEAK)
 
@@ -1858,7 +1858,7 @@ class JavaDLLComponent(Component):
                           os.path.join('api', 'java', 'Native'))
             elif IS_OSX and IS_ARCH_ARM64:
                 out.write('\t$(SLINK) $(SLINK_OUT_FLAG)libz3java$(SO_EXT) $(SLINK_FLAGS) -arch arm64 %s$(OBJ_EXT) libz3$(SO_EXT)\n' %
-                          os.path.join('api', 'java', 'Native'))                
+                          os.path.join('api', 'java', 'Native'))
             else:
                 out.write('\t$(SLINK) $(SLINK_OUT_FLAG)libz3java$(SO_EXT) $(SLINK_FLAGS) %s$(OBJ_EXT) libz3$(SO_EXT)\n' %
                           os.path.join('api', 'java', 'Native'))
@@ -2662,8 +2662,8 @@ def mk_config():
         if is_cygwin_mingw() or is_msys2():
             # when cross-compiling with MinGW, we need to statically link its standard libraries
             # and to make it create an import library.
-            SLIBEXTRAFLAGS = '%s -static-libgcc -static-libstdc++ -Wl,--out-implib,libz3.dll.a' % SLIBEXTRAFLAGS
-            LDFLAGS = '%s -static-libgcc -static-libstdc++' % LDFLAGS
+            SLIBEXTRAFLAGS = '%s -link -static-libgcc -static-libstdc++ -Wl,--out-implib,libz3.dll.a' % SLIBEXTRAFLAGS
+            LDFLAGS = '%s -link -static-libgcc -static-libstdc++' % LDFLAGS
         if sysname == 'Linux' and machine.startswith('armv7') or machine.startswith('armv8'):
             CXXFLAGS = '%s -fpic' % CXXFLAGS
         if IS_ARCH_ARM64 and IS_OSX:
@@ -2854,7 +2854,7 @@ def update_version():
     revision = VER_TWEAK
 
     print("UpdateVersion:", get_full_version_string(major, minor, build, revision))
-    
+
     if major is None or minor is None or build is None or revision is None:
         raise MKException("set_version(major, minor, build, revision) must be used before invoking update_version()")
     if not ONLY_MAKEFILES:
@@ -3068,7 +3068,7 @@ def mk_bindings(api_files):
           z3py_output_dir=get_z3py_dir(),
           dotnet_output_dir=dotnet_output_dir,
           java_input_dir=java_input_dir,
-          java_output_dir=java_output_dir,                                  
+          java_output_dir=java_output_dir,
           java_package_name=java_package_name,
           ml_output_dir=ml_output_dir,
           ml_src_dir=ml_output_dir
