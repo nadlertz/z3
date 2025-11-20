@@ -22,15 +22,4 @@ install: [
   ["sh" "-c" "ocamlfind install z3 build/api/ml/* -dll build/libz3.*"]
   ["cp" "build/z3" "%{bin}%/z3"]
 ]
-patches: [
-  "gccstd-2a.patch"
-    {os-family = "opensuse" | os-family = "suse" |
-     os-distribution = "ubuntu" & os-version <= "20.04"}
-]
-extra-source "gccstd-2a.patch" {
-  src:
-    "https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/z3/gccstd-2a.patch"
-  checksum:
-    "sha256=ae4088ff14739bcc2cadc90bc428f08277e898b832f6b859a46e23c584d513c8"
-}
 x-ci-accept-failures: ["centos-7" "oraclelinux-7" "opensuse-15.6"]
