@@ -57,7 +57,7 @@ add_custom_command(
 )
 
 
-set(z3ml_common_flags  "-package" "zarith"
+set(z3ml_common_flags
                        "-I" "${z3ml_bin}")
 
                        # add_custom_command(
@@ -185,7 +185,6 @@ endif()
 
 set(ocamlmklib_flags "-o" "z3ml"
                      "-ocamlcflags" "-bin-annot"
-                     "-package" "zarith"
                      ${c_lib_deps}
                      "-dllpath" "${libz3_path}"
                      "-L${ocaml_stublibs_path}"
@@ -278,7 +277,6 @@ add_custom_command(
   TARGET build_z3_ocaml_bindings POST_BUILD
   COMMAND "${OCAMLFIND}" ocamlc
     -o "${z3ml_bin}/ml_example.byte"
-    -package zarith
     -linkpkg
     -I "${z3ml_bin}"
     -dllpath "${z3ml_bin}"
@@ -293,7 +291,6 @@ add_custom_command(
   TARGET build_z3_ocaml_bindings POST_BUILD
   COMMAND "${OCAMLFIND}" ocamlopt
     -o "${z3ml_bin}/ml_example"
-    -package zarith
     -linkpkg
     -I "${z3ml_bin}"
     "${z3ml_bin}/z3ml.cmxa"

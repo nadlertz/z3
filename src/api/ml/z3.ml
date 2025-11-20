@@ -1037,13 +1037,6 @@ struct
       | true, v -> v
       | false, _ -> raise (Error "Conversion failed.")
 
-    let get_big_int (x:expr) =
-      if is_int_numeral x then
-        let s = (Z3native.get_numeral_string (Expr.gc x) x) in
-        Z.of_string s
-      else
-        raise (Error "Conversion failed.")
-
     let numeral_to_string (x:expr) = Z3native.get_numeral_string (Expr.gc x) x
     let mk_const (ctx:context) (name:Symbol.symbol) = Expr.mk_const ctx name (mk_sort ctx)
     let mk_const_s (ctx:context) (name:string) = mk_const ctx (Symbol.mk_string ctx name)
@@ -1060,13 +1053,6 @@ struct
     let mk_sort ctx = Z3native.mk_real_sort ctx
     let get_numerator x = Z3native.get_numerator (Expr.gc x) x
     let get_denominator x = Z3native.get_denominator (Expr.gc x) x
-
-    let get_ratio x =
-      if is_rat_numeral x then
-        let s = Z3native.get_numeral_string (Expr.gc x) x in
-        Q.of_string s
-      else
-        raise (Error "Conversion failed.")
 
     let to_decimal_string (x:expr) (precision:int) = Z3native.get_numeral_decimal_string (Expr.gc x) x precision
     let numeral_to_string (x:expr) = Z3native.get_numeral_string (Expr.gc x) x

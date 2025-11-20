@@ -1998,8 +1998,8 @@ class MLComponent(Component):
                 OCAML_FLAGS += '-g'
 
             if OCAMLFIND:
-                OCAMLCF = OCAMLFIND + ' ' + 'ocamlc -package zarith' + ' ' + OCAML_FLAGS
-                OCAMLOPTF = OCAMLFIND + ' ' + 'ocamlopt -package zarith' + ' ' + OCAML_FLAGS
+                OCAMLCF = OCAMLFIND + ' ' + 'ocamlc' + ' ' + OCAML_FLAGS
+                OCAMLOPTF = OCAMLFIND + ' ' + 'ocamlopt' + ' ' + OCAML_FLAGS
             else:
                 OCAMLCF = OCAMLC + ' ' + OCAML_FLAGS
                 OCAMLOPTF = OCAMLOPT + ' ' + OCAML_FLAGS
@@ -2339,7 +2339,7 @@ class MLExampleComponent(ExampleComponent):
             out.write('\tocamlfind %s ' % OCAMLC)
             if DEBUG_MODE:
                 out.write('-g ')
-            out.write('-custom -o ml_example.byte -package zarith -I api/ml -cclib "-L. -lpthread -lstdc++ -lz3" -linkpkg z3ml.cma')
+            out.write('-custom -o ml_example.byte  -I api/ml -cclib "-L. -lpthread -lstdc++ -lz3" -linkpkg z3ml.cma')
             for mlfile in get_ml_files(self.ex_dir):
                 out.write(' %s/%s' % (self.to_ex_dir, mlfile))
             out.write('\n')
@@ -2350,7 +2350,7 @@ class MLExampleComponent(ExampleComponent):
             out.write('\tocamlfind %s ' % OCAMLOPT)
             if DEBUG_MODE:
                 out.write('-g ')
-            out.write('-o ml_example$(EXE_EXT) -package zarith -I api/ml -cclib "-L. -lpthread -lstdc++ -lz3" -linkpkg z3ml.cmxa')
+            out.write('-o ml_example$(EXE_EXT) -I api/ml -cclib "-L. -lpthread -lstdc++ -lz3" -linkpkg z3ml.cmxa')
             for mlfile in get_ml_files(self.ex_dir):
                 out.write(' %s/%s' % (self.to_ex_dir, mlfile))
             out.write('\n')
